@@ -1,0 +1,112 @@
+version: '3.5'
+
+networks:
+  test-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 20.10.1.0/24
+
+services:
+
+  zookeeper:
+    hostname: zookeeper
+    container_name: zookeeper
+    image: wurstmeister/zookeeper:3.4.6
+    expose:
+    - "2181"
+    ports:
+    - "2181:2181"
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.2
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    env_file:
+    - services/kafka-broker/kafka-variables.env
+    depends_on:
+    - zookeeper
+    ports:
+    - '9092:9092'
+    - '8082:8082'
+    - '8083:8083'
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.3
+
+  db:
+    build: ./services/db
+    container_name: db
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+    - '5432:5432'
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.4
+    
+  prod:
+    build: ./services/prod
+    container_name: prod
+    environment:
+      kafka: kafka
+    restart: always
+    ports:
+    - '8080:8080'
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.5
+
+  cons:
+    build: ./services/cons
+    container_name: cons
+    environment:
+      kafka: kafka
+      API_HOST: orm
+    restart: always
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.6
+
+  querier:
+    build: ./services/querier
+    container_name: querier
+    restart: always
+    ports:
+    - '8081:8081'
+    environment:
+      API_HOST: orm
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.7
+
+  orm:
+    build: ./services/orm
+    container_name: orm
+    restart: always
+    depends_on:
+      - db
+    ports:
+    - '5431:5431'
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.8
+
+  ui:
+    build: 
+      context: ./services/ui
+      dockerfile: Dockerfile
+    container_name: ui
+    restart: always
+    ports:
+    - '8084:8084'
+    expose: 
+    - 8084
+
+    networks:
+      test-network:
+        ipv4_address: 20.10.1.10

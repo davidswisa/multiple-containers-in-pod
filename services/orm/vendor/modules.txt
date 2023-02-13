@@ -1,0 +1,11 @@
+# github.com/davidswisa/microservices-example-kube v0.0.0-20220710203052-0ed414c2b20a
+## explicit
+github.com/davidswisa/microservices-example-kube/pkg/reservation
+# github.com/gorilla/mux v1.8.0
+## explicit
+github.com/gorilla/mux
+# github.com/lib/pq v1.9.0
+## explicit
+github.com/lib/pq
+github.com/lib/pq/oid
+github.com/lib/pq/scram
