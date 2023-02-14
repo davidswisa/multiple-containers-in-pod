@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/davidswisa/multiple-containers-in-pod/pkg/orm"
 	"github.com/rs/cors"
-	"github.com/davidswisa/microservices-example-kube/pkg/orm"
 )
 
 var (

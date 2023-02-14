@@ -15,7 +15,7 @@ spec:
         io.kompose.service: ui
     spec:
       containers:
-      - image: microservices-example-kube_ui:latest
+      - image: multiple-containers-in-pod_ui:latest
         imagePullPolicy: "IfNotPresent"
         name: ui
         ports:

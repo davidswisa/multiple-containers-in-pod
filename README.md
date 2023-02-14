@@ -1,4 +1,4 @@
-# microservices-example-kube
+# multiple-containers-in-pod
 
 ## About the project:  
 
@@ -58,7 +58,7 @@ exec bash
 
 Get the source code:
 ```bash
-git clone https://github.com/davidswisa/microservices-example-kube.git
+git clone https://github.com/davidswisa/multiple-containers-in-pod.git
 ```
 
 To run the services:  

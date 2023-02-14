@@ -17,7 +17,7 @@
 # kube/*
 .vscode/*
 !.vscode/launch.json
-!.vscode/microservices-example-kube.code-workspace
+!.vscode/multiple-containers-in-pod.code-workspace
 !.vscode/settings.json
 
 ui/__debug_bin

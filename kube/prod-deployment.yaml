@@ -19,7 +19,7 @@ spec:
       - env:
         - name: kafka
           value: kafka
-        image: microservices-example-kube_prod:latest
+        image: multiple-containers-in-pod_prod:latest
         imagePullPolicy: "IfNotPresent"
         name: prod
         ports:
