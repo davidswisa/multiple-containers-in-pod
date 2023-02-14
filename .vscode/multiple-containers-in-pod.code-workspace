@@ -11,6 +11,18 @@
 		},
 		{
 			"path": "../services/cons"
+		},
+		{
+			"path": "../services/db"
+		},
+		{
+			"path": "../services/kafka-broker"
+		},
+		{
+			"path": "../services/prod"
+		},
+		{
+			"path": "../services/querier"
 		}
 	],
 	"settings": {}

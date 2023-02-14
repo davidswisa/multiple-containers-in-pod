@@ -1,5 +1,5 @@
-github.com/davidswisa/multiple-containers-in-pod v0.0.0-20220710203052-0ed414c2b20a h1:eDereRmgfmmzN3pRFE8kBXZXHUYDjJC8JA2YGfBZtzY=
-github.com/davidswisa/multiple-containers-in-pod v0.0.0-20220710203052-0ed414c2b20a/go.mod h1:F0RQuCnb2lKduImjz4yyKsFbkILQAFyznXQ6xJUskow=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5 h1:XDYW+xef6BGG0qBNCxIjUzppsJZrP5X1yGl1ZAD3nJQ=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5/go.mod h1:VZKN1m/WqVPea9AaQLPyTMxiNg42blzHf8IOXd3/ec8=
 github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
 github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
 github.com/lib/pq v1.9.0 h1:L8nSXQQzAYByakOFMTwpjRoHsMJklur4Gi59b6VivR8=

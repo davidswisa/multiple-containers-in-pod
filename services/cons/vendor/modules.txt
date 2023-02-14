@@ -1,20 +1,23 @@
-# github.com/davidswisa/multiple-containers-in-pod v0.0.0-20220710203052-0ed414c2b20a
-## explicit
+# github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5
+## explicit; go 1.19
 github.com/davidswisa/multiple-containers-in-pod/pkg/orm
 github.com/davidswisa/multiple-containers-in-pod/pkg/reservation
 # github.com/golang/snappy v0.0.1
+## explicit
 github.com/golang/snappy
 # github.com/klauspost/compress v1.9.8
+## explicit
 github.com/klauspost/compress/fse
 github.com/klauspost/compress/huff0
 github.com/klauspost/compress/snappy
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
 # github.com/pierrec/lz4 v2.0.5+incompatible
+## explicit
 github.com/pierrec/lz4
 github.com/pierrec/lz4/internal/xxh32
 # github.com/segmentio/kafka-go v0.4.9
-## explicit
+## explicit; go 1.13
 github.com/segmentio/kafka-go
 github.com/segmentio/kafka-go/compress
 github.com/segmentio/kafka-go/compress/gzip
