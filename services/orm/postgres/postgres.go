@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/davidswisa/microservices-example-kube/pkg/reservation"
+	"github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
 
 	_ "github.com/lib/pq"
 )

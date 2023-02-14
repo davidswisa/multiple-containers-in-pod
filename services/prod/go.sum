@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/davidswisa/microservices-example-kube v0.0.0-20220710203052-0ed414c2b20a h1:eDereRmgfmmzN3pRFE8kBXZXHUYDjJC8JA2YGfBZtzY=
-github.com/davidswisa/microservices-example-kube v0.0.0-20220710203052-0ed414c2b20a/go.mod h1:F0RQuCnb2lKduImjz4yyKsFbkILQAFyznXQ6xJUskow=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20220710203052-0ed414c2b20a h1:eDereRmgfmmzN3pRFE8kBXZXHUYDjJC8JA2YGfBZtzY=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20220710203052-0ed414c2b20a/go.mod h1:F0RQuCnb2lKduImjz4yyKsFbkILQAFyznXQ6xJUskow=
 github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 h1:YEetp8/yCZMuEPMUDHG0CW/brkkEp8mzqk2+ODEitlw=
 github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21/go.mod h1:+020luEh2TKB4/GOp8oxxtq0Daoen/Cii55CzbTV6DU=
 github.com/golang/snappy v0.0.1 h1:Qgr9rKW7uDUkrbSmQeiDsGa8SjGyCOGtuasMWwvp2P4=

@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../services/orm"
+		},
+		{
+			"path": "../services/cons"
 		}
 	],
 	"settings": {}

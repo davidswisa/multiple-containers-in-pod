@@ -1,4 +1,4 @@
-# microservices-example-kube
+# multiple-containers-in-pod
 
 ## About the project:  
 
@@ -7,20 +7,15 @@ This project is a kubernetes translation derived from this [project](https://git
 This simple reservation application uses a queue manager for all reservation tasks like create, update, and delete.
 And use a more direct approach to get the data from the DB.
 
-### How it all works
+### Comparisons  
 
-```mermaid
-graph TD;
-GUI(GUI) -->|GET| Querier;
-GUI(GUI) -->|POST,PUT,DELETE| Producer;
+### Single container in POD Diagram
 
-Querier(Querier) --> ORM;
-Kafka --> Producer;
-Kafka --> Consumer;
-ORM --> Database;
-Consumer --> ORM;
+![image info](docs/images/diagram-origenal.png)
 
-```
+### Multi container POD Diagram  
+
+![image info](docs/images/diagram.png)
 
 ### Service Table
 | Container | Port | Purpose  |
@@ -63,7 +58,7 @@ exec bash
 
 Get the source code:
 ```bash
-git clone https://github.com/davidswisa/microservices-example-kube.git
+git clone https://github.com/davidswisa/multiple-containers-in-pod.git
 ```
 
 To run the services:  
@@ -80,11 +75,12 @@ http://<MACHINE-IP>:8084
 
 ## How can be extended:  
 
-* can add upgared flow for a new pod version
+* can add upgrade flow for a new pod version
 * can be a base for helm charts project  
 
 
 ## For further reading:  
 
-* [converting docker-compose to kubernetes](https://kompose.io/)  
+* [Kubernetes multi-container pods and container communication](https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/)  
+* [Multi-Container Pods in Kubernetes](https://linchpiner.github.io/k8s-multi-container-pods.html)
 

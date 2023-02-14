@@ -46,7 +46,7 @@ func NewORMClient() *OClient {
 	return api
 }
 
-// Get is a function that will generate a GET reqest
+// Get is a function that will generate a GET request
 func (m *OClient) Get(
 	uri string,
 	headers http.Header,
@@ -99,7 +99,7 @@ func (m *OClient) runRequest(req *http.Request) (string, *http.Response, error) 
 	return strBody, res, err
 }
 
-// Post is a function that will generate a Post reqest
+// Post is a function that will generate a Post request
 func (m *OClient) Post(
 	uri string,
 	data string,
@@ -113,7 +113,7 @@ func (m *OClient) Post(
 	return m.runRequest(req)
 }
 
-// Put is a function that will generate a PUT reqest
+// Put is a function that will generate a PUT request
 func (m *OClient) Put(
 	uri string,
 	data string,
@@ -127,7 +127,7 @@ func (m *OClient) Put(
 	return m.runRequest(req)
 }
 
-// Delete is a function that will generate a DELETE reqest
+// Delete is a function that will generate a DELETE request
 func (m *OClient) Delete(uri string, headers http.Header) (string, *http.Response, error) {
 	req, err := m.generateRequest(uri, http.MethodDelete, nil, headers)
 	if err != nil {

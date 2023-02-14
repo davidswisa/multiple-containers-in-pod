@@ -9,8 +9,8 @@ import (
 	"os"
 	"strconv"
 
+	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
 	"github.com/gorilla/mux"
-	rsv "github.com/davidswisa/microservices-example-kube/pkg/reservation"
 
 	"github.com/rs/cors"
 	kafka "github.com/segmentio/kafka-go"

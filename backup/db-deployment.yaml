@@ -22,7 +22,7 @@ spec:
           value: postgres
         - name: POSTGRES_USER
           value: postgres
-        image: microservices-example-kube_db:latest
+        image: multiple-containers-in-pod_db:latest
         imagePullPolicy: "IfNotPresent"
         name: db
         ports:

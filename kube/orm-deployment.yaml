@@ -15,12 +15,25 @@ spec:
         io.kompose.service: orm
     spec:
       containers:
-      - image: microservices-example-kube_orm:latest
+      - image: multiple-containers-in-pod_orm:latest
         imagePullPolicy: "IfNotPresent"
         name: orm
         ports:
         - containerPort: 5431
           hostPort: 5431
+        resources: {}
+      - image: multiple-containers-in-pod_db:latest
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_USER
+          value: postgres
+        imagePullPolicy: "IfNotPresent"
+        name: db
+        ports:
+        - containerPort: 5432
         resources: {}
       restartPolicy: Always
 

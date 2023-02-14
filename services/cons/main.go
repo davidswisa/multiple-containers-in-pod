@@ -9,9 +9,9 @@ import (
 	"os"
 	"strconv"
 
-	rsv "github.com/davidswisa/microservices-example-kube/pkg/reservation"
+	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
 
-	"github.com/davidswisa/microservices-example-kube/pkg/orm"
+	"github.com/davidswisa/multiple-containers-in-pod/pkg/orm"
 
 	"github.com/segmentio/kafka-go"
 )

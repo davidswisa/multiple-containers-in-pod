@@ -18,7 +18,7 @@ spec:
       - env:
         - name: API_HOST
           value: orm
-        image: microservices-example-kube_querier:latest
+        image: multiple-containers-in-pod_querier:latest
         imagePullPolicy: "IfNotPresent"
         name: querier
         ports:

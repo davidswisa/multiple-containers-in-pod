@@ -1,3 +1,3 @@
-module github.com/davidswisa/microservices-example-kube
+module github.com/davidswisa/multiple-containers-in-pod
 
-go 1.17
+go 1.19

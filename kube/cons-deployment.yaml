@@ -21,7 +21,7 @@ spec:
           value: orm
         - name: kafka
           value: kafka
-        image: microservices-example-kube_cons:latest
+        image: multiple-containers-in-pod_cons:latest
         imagePullPolicy: "IfNotPresent"
         name: cons
         resources: {}
