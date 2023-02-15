@@ -18,6 +18,8 @@ spec:
       - env:
         - name: KAFKA_PORT
           value: "9092"
+        - name: ALLOW_PLAINTEXT_LISTENER
+          value: "yes"
         - name: KAFKA_ADVERTISED_HOST_NAME
           valueFrom:
             configMapKeyRef:
@@ -98,7 +100,7 @@ spec:
             configMapKeyRef:
               key: KAFKA_ZOOKEEPER_CONNECT
               name: kafka-broker-kafka-variables-env
-        image: wurstmeister/kafka
+        image: wurstmeister/kafka:latest
         imagePullPolicy: ""
         name: kafka
         ports:
@@ -107,3 +109,4 @@ spec:
         - containerPort: 8083
         resources: {}
       restartPolicy: Always
+

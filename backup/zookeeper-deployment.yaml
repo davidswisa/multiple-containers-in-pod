@@ -15,11 +15,18 @@ spec:
         io.kompose.service: zookeeper
     spec:
       containers:
-      - image: wurstmeister/zookeeper:3.4.6
+      - name: zookeeper
+        image: digitalwonderland/zookeeper:latest
         imagePullPolicy: ""
-        name: zookeeper
         ports:
         - containerPort: 2181
         resources: {}
+        env:
+        - name: ALLOW_ANONYMOUS_LOGIN
+          value: "yes"
+        - name: ZOOKEEPER_ID
+          value: "1"
+        - name: ZOOKEEPER_SERVER_1
+          value: zoo1
       hostname: zookeeper
       restartPolicy: Always

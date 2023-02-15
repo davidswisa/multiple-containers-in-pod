@@ -6,9 +6,9 @@ metadata:
   name: kafka
 spec:
   ports:
-  - name: "9092"
-    port: 9092
-    targetPort: 9092
+  - port: 9092
+    name: kafka-port
+    protocol: TCP
   - name: "8082"
     port: 8082
     targetPort: 8082
@@ -17,3 +17,4 @@ spec:
     targetPort: 8083
   selector:
     io.kompose.service: kafka
+

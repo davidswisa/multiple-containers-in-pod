@@ -19,7 +19,7 @@ type PGInfo struct {
 }
 
 const (
-	pgHost     string = "db"
+	pgHost     string = "localhost"
 	pgPort     int    = 5432
 	pgUser     string = "postgres"
 	pgPassword string = "postgres"

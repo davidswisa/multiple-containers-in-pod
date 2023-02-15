@@ -33,3 +33,8 @@ kube-clean:
 	kubectl delete daemonset --all
 	kubectl delete NetworkPolicy --all
 	kubectl delete replicaset --all
+
+.PHONY: test
+test:
+	kubectl apply -f ./test
+

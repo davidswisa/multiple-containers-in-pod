@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"strconv"
 
 	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
@@ -30,7 +29,7 @@ func main() {
 	// get kafka reader using environment variables.
 	client := orm.NewORMClient()
 
-	server := os.Getenv("kafka")
+	server := "kafka" //os.Getenv("kafka")
 	kafkaURL := server + ":9092"
 	topic := "topic1"
 	groupID := "group1"
@@ -38,7 +37,7 @@ func main() {
 
 	defer reader.Close()
 
-	log.Println("consuming from kafka...")
+	log.Println("consuming from kafka... ", kafkaURL)
 
 	for {
 		msg, err := reader.ReadMessage(context.Background())

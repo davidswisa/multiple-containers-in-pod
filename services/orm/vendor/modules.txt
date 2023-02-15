@@ -1,11 +1,11 @@
 # github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5
-## explicit; go 1.19
+## explicit
 github.com/davidswisa/multiple-containers-in-pod/pkg/reservation
 # github.com/gorilla/mux v1.8.0
-## explicit; go 1.12
+## explicit
 github.com/gorilla/mux
 # github.com/lib/pq v1.9.0
-## explicit; go 1.13
+## explicit
 github.com/lib/pq
 github.com/lib/pq/oid
 github.com/lib/pq/scram

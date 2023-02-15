@@ -17,6 +17,10 @@ func reservationsHandler(i *pg.Instance) func(http.ResponseWriter, *http.Request
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
 
 		log.Printf("List Request accepted : %v %v", req.Method, req.URL)
+		if i == nil {
+			log.Printf("Error: pg.Instance is not initialized.\ni: %v", i)
+			// wrt.WriteHeader(http.StatusInternalServerError)
+		}
 		rows, _ := i.AllReservations()
 
 		log.Printf("rows: %v", rows)
