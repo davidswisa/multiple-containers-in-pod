@@ -19,6 +19,8 @@ spec:
       - env:
         - name: kafka
           value: kafka
+        - name: API_HOST
+          value: orm
         image: multiple-containers-in-pod_prod:latest
         imagePullPolicy: "IfNotPresent"
         name: prod

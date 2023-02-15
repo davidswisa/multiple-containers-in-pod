@@ -50,7 +50,7 @@ func main() {
 			log.Fatal(err)
 		}
 		log.Println("consumer: got connection from ", conn.RemoteAddr())
-		buf := make([]byte, 1024)
+		buf := make([]byte, 256)
 		b, err := conn.Read(buf[:])
 		if err != nil {
 			log.Fatal(err)
