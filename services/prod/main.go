@@ -1,26 +1,32 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
-	"os"
 	"strconv"
 
 	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
 	"github.com/gorilla/mux"
 
 	"github.com/rs/cors"
-	kafka "github.com/segmentio/kafka-go"
 )
 
 var (
 	index = 1
+	conn  net.Conn
 )
 
-func producerHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Request) {
+type Message struct {
+	Key   []byte `json:"key"`
+	Value []byte `json:"value"`
+}
+
+func producerHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
 		log.Printf("Request accepted : %v %v", req.Method, req.URL)
 
@@ -44,12 +50,12 @@ func producerHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.
 			return
 		}
 
-		msg := kafka.Message{
+		msg := Message{
 			Key:   []byte(rsv.OPNEW),
 			Value: b,
 		}
 		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPNEW))
-		err = kafkaWriter.WriteMessages(req.Context(), msg)
+		err = WriteMessages(req.Context(), msg)
 
 		if err != nil {
 			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
@@ -60,7 +66,7 @@ func producerHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.
 	})
 }
 
-func updateHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Request) {
+func updateHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
 		log.Printf("Request accepted : %v %v", req.Method, req.URL)
 
@@ -86,12 +92,12 @@ func updateHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Re
 			return
 		}
 
-		msg := kafka.Message{
+		msg := Message{
 			Key:   []byte(rsv.OPCHG),
 			Value: b,
 		}
 		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPCHG))
-		err = kafkaWriter.WriteMessages(req.Context(), msg)
+		err = WriteMessages(req.Context(), msg)
 
 		if err != nil {
 			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
@@ -102,7 +108,7 @@ func updateHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Re
 	})
 }
 
-func deleteHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Request) {
+func deleteHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
 
 		log.Printf("DELETE Request accepted : %v %v", req.Method, req.URL)
@@ -119,12 +125,12 @@ func deleteHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Re
 		// 	return
 		// }
 
-		msg := kafka.Message{
+		msg := Message{
 			Key:   []byte(rsv.OPREM),
 			Value: []byte(id),
 		}
 		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPREM))
-		err := kafkaWriter.WriteMessages(req.Context(), msg)
+		err := WriteMessages(req.Context(), msg)
 
 		if err != nil {
 			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
@@ -135,28 +141,48 @@ func deleteHandler(kafkaWriter *kafka.Writer) func(http.ResponseWriter, *http.Re
 	})
 }
 
-func getKafkaWriter(kafkaURL, topic string) *kafka.Writer {
-	return &kafka.Writer{
-		Addr:     kafka.TCP(kafkaURL),
-		Topic:    topic,
-		Balancer: &kafka.LeastBytes{},
+// func getKafkaWriter(kafkaURL, topic string) *kafka.Writer {
+// 	return &kafka.Writer{
+// 		Addr:     kafka.TCP(kafkaURL),
+// 		Topic:    topic,
+// 		Balancer: &kafka.LeastBytes{},
+// 	}
+// }
+
+func WriteMessages(c context.Context, msg Message) error {
+	b, err := json.Marshal(msg)
+	if err != nil {
+		return err
 	}
+	_, err = conn.Write(b)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func main() {
 	// get kafka writer using environment variables.
-	server := os.Getenv("kafka")
-	kafkaURL := server + ":9092"
-	topic := "topic1"
-	kafkaWriter := getKafkaWriter(kafkaURL, topic)
-	defer kafkaWriter.Close()
+	// server := os.Getenv("kafka")
+	// kafkaURL := server + ":9092"
+	// topic := "topic1"
+	// kafkaWriter := getKafkaWriter(kafkaURL, topic)
+	// defer kafkaWriter.Close()
+	// if err := os.RemoveAll("/tmp/echo.sock"); err != nil {
+	// 	log.Fatal(err)
+	// }
+	con, err := net.Dial("unix", "/tmp/echo.sock")
+	if err != nil {
+		log.Fatalf("producer: %v", err)
+	}
+	conn = con
 
 	// Add handle func for producer.
 	router := mux.NewRouter()
 
-	router.HandleFunc("/reservations", producerHandler(kafkaWriter)).Methods(http.MethodPost, http.MethodOptions)
-	router.HandleFunc("/reservations/{id:[0-9]+}", deleteHandler(kafkaWriter)).Methods(http.MethodDelete, http.MethodOptions)
-	router.HandleFunc("/reservations/{id:[0-9]+}", updateHandler(kafkaWriter)).Methods(http.MethodPut, http.MethodOptions)
+	router.HandleFunc("/reservations", producerHandler()).Methods(http.MethodPost, http.MethodOptions)
+	router.HandleFunc("/reservations/{id:[0-9]+}", deleteHandler()).Methods(http.MethodDelete, http.MethodOptions)
+	router.HandleFunc("/reservations/{id:[0-9]+}", updateHandler()).Methods(http.MethodPut, http.MethodOptions)
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:8084", "http://localhost:8080", "http://localhost:8081"},

@@ -1,46 +1,58 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"strconv"
 
-	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
-
 	"github.com/davidswisa/multiple-containers-in-pod/pkg/orm"
-
-	"github.com/segmentio/kafka-go"
+	rsv "github.com/davidswisa/multiple-containers-in-pod/pkg/reservation"
 )
 
-func getKafkaReader(kafkaURL, topic, groupID string) *kafka.Reader {
-	return kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  []string{kafkaURL},
-		GroupID:  groupID,
-		Topic:    topic,
-		MinBytes: 10e3, // 10KB
-		MaxBytes: 10e4, // 100KB
-	})
+// func getKafkaReader(kafkaURL, topic, groupID string) *kafka.Reader {
+// 	return kafka.NewReader(kafka.ReaderConfig{
+// 		Brokers:  []string{kafkaURL},
+// 		GroupID:  groupID,
+// 		Topic:    topic,
+// 		MinBytes: 10e3, // 10KB
+// 		MaxBytes: 10e4, // 100KB
+// 	})
+// }
+
+type Message struct {
+	Key   []byte `json:"key"`
+	Value []byte `json:"value"`
 }
 
 func main() {
 	// get kafka reader using environment variables.
 	client := orm.NewORMClient()
 
-	server := "kafka" //os.Getenv("kafka")
-	kafkaURL := server + ":9092"
-	topic := "topic1"
-	groupID := "group1"
-	reader := getKafkaReader(kafkaURL, topic, groupID)
+	// server := "kafka" //os.Getenv("kafka")
+	// kafkaURL := server + ":9092"
+	// topic := "topic1"
+	// groupID := "group1"
+	// reader := getKafkaReader(kafkaURL, topic, groupID)
 
-	defer reader.Close()
+	// defer reader.Close()
 
-	log.Println("consuming from kafka... ", kafkaURL)
+	c, err := net.Dial("unix", "/tmp/echo.sock")
+	if err != nil {
+		log.Fatalf("consumer: %v", err)
+	}
+	log.Println("consuming from socket...")
 
 	for {
-		msg, err := reader.ReadMessage(context.Background())
+		buf := make([]byte, 1024)
+		_, err := c.Read(buf[:])
+		if err != nil {
+			log.Fatal(err)
+		}
+		var msg Message
+		err = json.Unmarshal(buf, &msg)
 		if err != nil {
 			log.Fatal(err)
 		}
