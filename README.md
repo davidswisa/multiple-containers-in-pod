@@ -2,31 +2,32 @@
 
 ## About the project:  
 
-This project is a kubernetes translation derived from this [project](https://github.com/davidswisa/microservices-example).
+The original [project](https://github.com/davidswisa/microservices-example) is simple reservation application uses a queue manager for all reservation tasks like create, update, and delete.
+And use a more direct approach to get the data from the DB.  
 
-This simple reservation application uses a queue manager for all reservation tasks like create, update, and delete.
-And use a more direct approach to get the data from the DB.
+In this project we wanted to explore a more complex `POD` soche as multi container `PODS` and multi process container.   
 
 ### Comparisons  
 
-### Single container in POD Diagram
+### Simple POD Diagram  
 
-![image info](docs/images/diagram-origenal.png)
+In this example each `POD` have a single container and each container has a single process
 
-### Multi container POD Diagram  
+![image info](docs/images/diagram-origenal.png)  
 
-![image info](docs/images/diagram.png)
+### Complex POD Diagram  
+
+In this example we have two use cases multi container `PODS` (ORM and DB) and multi process container (producer consumer).
+
+![image info](docs/images/diagram.png)  
 
 ### Service Table
 | Container | Port | Purpose  |
 | :---      | :-   | :- |
 | ui        | 8084 | gui |
-| cons      | --   | get messages (tasks) from kafka and forwards to orm |
+| cons prod     | 8080   | prod: receive http request from ui and create messages (tasks) via a socket </br>cons: get messages (tasks) from prod and forwards to orm |
 | orm       | 5431 | used as a mitigator for DB |
-| prod      | 8080 | receive http request from ui and create messages (tasks) via kafka |
 | querier   | 8081 | receive http request from ui and forwards a query via orm |
-| kafka     | 9092, 8082, 8083 | message bus |
-| zookeeper | 2181 | ? |
 | db        | 5432 | data base |
 
 
@@ -58,7 +59,7 @@ exec bash
 
 Get the source code:
 ```bash
-git clone https://github.com/davidswisa/multiple-containers-in-pod.git
+git clone git@github.com:davidswisa/multiple-containers-in-pod.git
 ```
 
 To run the services:  
