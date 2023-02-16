@@ -9,33 +9,6 @@ networks:
 
 services:
 
-  zookeeper:
-    hostname: zookeeper
-    container_name: zookeeper
-    image: bitnami/zookeeper:latest
-    expose:
-    - "2181"
-    ports:
-    - "2181:2181"
-    networks:
-      test-network:
-        ipv4_address: 20.10.1.2
-
-  kafka:
-    image: bitnami/kafka:latest
-    container_name: kafka
-    env_file:
-    - services/kafka-broker/kafka-variables.env
-    depends_on:
-    - zookeeper
-    ports:
-    - '9092:9092'
-    - '8082:8082'
-    - '8083:8083'
-    networks:
-      test-network:
-        ipv4_address: 20.10.1.3
-
   db:
     build: ./services/db
     container_name: db
@@ -60,17 +33,6 @@ services:
     networks:
       test-network:
         ipv4_address: 20.10.1.5
-
-  cons:
-    build: ./services/cons
-    container_name: cons
-    environment:
-      kafka: kafka
-      API_HOST: orm
-    restart: always
-    networks:
-      test-network:
-        ipv4_address: 20.10.1.6
 
   querier:
     build: ./services/querier
