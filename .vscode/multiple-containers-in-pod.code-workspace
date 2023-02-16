@@ -10,15 +10,6 @@
 			"path": "../services/orm"
 		},
 		{
-			"path": "../services/cons"
-		},
-		{
-			"path": "../services/db"
-		},
-		{
-			"path": "../services/kafka-broker"
-		},
-		{
 			"path": "../services/prod"
 		},
 		{
