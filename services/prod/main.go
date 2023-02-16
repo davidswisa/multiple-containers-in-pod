@@ -32,6 +32,11 @@ func producerHandler() func(http.ResponseWriter, *http.Request) {
 
 		var r rsv.Reservation
 		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			fmt.Printf("Producer: Error: unexpected ioutil.ReadAll.\nreason: %v", err)
+			wrt.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		if err := json.Unmarshal(body, &r); err != nil {
 			log.Printf("Producer: Error: request body incorrect.\nreason: %v", err)
@@ -72,6 +77,11 @@ func updateHandler() func(http.ResponseWriter, *http.Request) {
 
 		var r rsv.Reservation
 		body, err := ioutil.ReadAll(req.Body)
+		if err != nil {
+			fmt.Printf("Producer: Error: unexpected ioutil.ReadAll.\nreason: %v", err)
+			wrt.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		if err := json.Unmarshal(body, &r); err != nil {
 			log.Printf("Producer: Error: request body incorrect.\nreason: %v", err)
@@ -118,13 +128,6 @@ func deleteHandler() func(http.ResponseWriter, *http.Request) {
 
 		log.Printf("Producer: Delete Reservation Details : %v", id)
 
-		//  b, err := r.Bytes()
-		// if err != nil {
-		// 	fmt.Printf("Error: unexpected encoding issue.\nreason: %v", err)
-		// 	wrt.WriteHeader(http.StatusBadRequest)
-		// 	return
-		// }
-
 		msg := Message{
 			Key:   []byte(rsv.OPREM),
 			Value: []byte(id),
@@ -141,14 +144,6 @@ func deleteHandler() func(http.ResponseWriter, *http.Request) {
 	})
 }
 
-// func getKafkaWriter(kafkaURL, topic string) *kafka.Writer {
-// 	return &kafka.Writer{
-// 		Addr:     kafka.TCP(kafkaURL),
-// 		Topic:    topic,
-// 		Balancer: &kafka.LeastBytes{},
-// 	}
-// }
-
 func WriteMessages(c context.Context, msg Message) error {
 	b, err := json.Marshal(msg)
 	if err != nil {
@@ -162,15 +157,7 @@ func WriteMessages(c context.Context, msg Message) error {
 }
 
 func main() {
-	// get kafka writer using environment variables.
-	// server := os.Getenv("kafka")
-	// kafkaURL := server + ":9092"
-	// topic := "topic1"
-	// kafkaWriter := getKafkaWriter(kafkaURL, topic)
-	// defer kafkaWriter.Close()
-	// if err := os.RemoveAll("/tmp/echo.sock"); err != nil {
-	// 	log.Fatal(err)
-	// }
+
 	con, err := net.Dial("unix", "/tmp/echo.sock")
 	if err != nil {
 		log.Fatalf("Producer: %v", err)
