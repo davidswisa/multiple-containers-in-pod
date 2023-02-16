@@ -28,24 +28,24 @@ type Message struct {
 
 func producerHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
-		log.Printf("Request accepted : %v %v", req.Method, req.URL)
+		log.Printf("Producer: Request accepted : %v %v", req.Method, req.URL)
 
 		var r rsv.Reservation
 		body, err := ioutil.ReadAll(req.Body)
 
 		if err := json.Unmarshal(body, &r); err != nil {
-			log.Printf("Error: request body incorrect.\nreason: %v", err)
+			log.Printf("Producer: Error: request body incorrect.\nreason: %v", err)
 			wrt.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
 		r.ID = index
 		index++
-		log.Printf("Reservation Details : %v", r)
+		log.Printf("Producer: Reservation Details : %v", r)
 
 		b, err := r.Bytes()
 		if err != nil {
-			fmt.Printf("Error: unexpected encoding issue.\nreason: %v", err)
+			fmt.Printf("Producer: Error: unexpected encoding issue.\nreason: %v", err)
 			wrt.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -54,11 +54,11 @@ func producerHandler() func(http.ResponseWriter, *http.Request) {
 			Key:   []byte(rsv.OPNEW),
 			Value: b,
 		}
-		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPNEW))
+		log.Printf("Producer: Submitting request. Operation: %s,", string(rsv.OPNEW))
 		err = WriteMessages(req.Context(), msg)
 
 		if err != nil {
-			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
+			log.Printf("Producer: Error: unexpected error.\nreason :%v", err)
 			wrt.WriteHeader(http.StatusInternalServerError)
 			wrt.Write([]byte(err.Error()))
 			log.Fatalln(err)
@@ -68,13 +68,13 @@ func producerHandler() func(http.ResponseWriter, *http.Request) {
 
 func updateHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
-		log.Printf("Request accepted : %v %v", req.Method, req.URL)
+		log.Printf("Producer: Request accepted : %v %v", req.Method, req.URL)
 
 		var r rsv.Reservation
 		body, err := ioutil.ReadAll(req.Body)
 
 		if err := json.Unmarshal(body, &r); err != nil {
-			log.Printf("Error: request body incorrect.\nreason: %v", err)
+			log.Printf("Producer: Error: request body incorrect.\nreason: %v", err)
 			wrt.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -83,11 +83,11 @@ func updateHandler() func(http.ResponseWriter, *http.Request) {
 		id, _ := strconv.Atoi(params["id"])
 		r.ID = id
 
-		log.Printf("Update Reservation Details : %v, %v", id, r)
+		log.Printf("Producer: Update Reservation Details : %v, %v", id, r)
 
 		b, err := r.Bytes()
 		if err != nil {
-			fmt.Printf("Error: unexpected encoding issue.\nreason: %v", err)
+			fmt.Printf("Producer: Error: unexpected encoding issue.\nreason: %v", err)
 			wrt.WriteHeader(http.StatusBadRequest)
 			return
 		}
@@ -96,11 +96,11 @@ func updateHandler() func(http.ResponseWriter, *http.Request) {
 			Key:   []byte(rsv.OPCHG),
 			Value: b,
 		}
-		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPCHG))
+		log.Printf("Producer: Submitting request. Operation: %s,", string(rsv.OPCHG))
 		err = WriteMessages(req.Context(), msg)
 
 		if err != nil {
-			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
+			log.Printf("Producer: Error: unexpected error.\nreason :%v", err)
 			wrt.WriteHeader(http.StatusInternalServerError)
 			wrt.Write([]byte(err.Error()))
 			log.Fatalln(err)
@@ -111,12 +111,12 @@ func updateHandler() func(http.ResponseWriter, *http.Request) {
 func deleteHandler() func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(wrt http.ResponseWriter, req *http.Request) {
 
-		log.Printf("DELETE Request accepted : %v %v", req.Method, req.URL)
+		log.Printf("Producer: DELETE Request accepted : %v %v", req.Method, req.URL)
 
 		params := mux.Vars(req)
 		id := params["id"]
 
-		log.Printf("Delete Reservation Details : %v", id)
+		log.Printf("Producer: Delete Reservation Details : %v", id)
 
 		//  b, err := r.Bytes()
 		// if err != nil {
@@ -129,11 +129,11 @@ func deleteHandler() func(http.ResponseWriter, *http.Request) {
 			Key:   []byte(rsv.OPREM),
 			Value: []byte(id),
 		}
-		log.Printf("Submitting request to Kafka. Operation: %s,", string(rsv.OPREM))
+		log.Printf("Producer: Submitting request. Operation: %s,", string(rsv.OPREM))
 		err := WriteMessages(req.Context(), msg)
 
 		if err != nil {
-			log.Printf("Error: Kafka.WriteMessage unexpected error.\nreason :%v", err)
+			log.Printf("Producer: Error: unexpected error.\nreason :%v", err)
 			wrt.WriteHeader(http.StatusInternalServerError)
 			wrt.Write([]byte(err.Error()))
 			log.Fatalln(err)
@@ -173,7 +173,7 @@ func main() {
 	// }
 	con, err := net.Dial("unix", "/tmp/echo.sock")
 	if err != nil {
-		log.Fatalf("producer: %v", err)
+		log.Fatalf("Producer: %v", err)
 	}
 	conn = con
 
