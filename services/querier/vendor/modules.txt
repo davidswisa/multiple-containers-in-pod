@@ -1,5 +1,5 @@
-# github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5
-## explicit
+# github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230216073840-a84f9183b338
+## explicit; go 1.15
 github.com/davidswisa/multiple-containers-in-pod/pkg/orm
 # github.com/rs/cors v1.7.0
 ## explicit

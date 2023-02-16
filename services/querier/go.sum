@@ -1,4 +1,4 @@
-github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5 h1:XDYW+xef6BGG0qBNCxIjUzppsJZrP5X1yGl1ZAD3nJQ=
-github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230214100730-1f50e3b2c0e5/go.mod h1:VZKN1m/WqVPea9AaQLPyTMxiNg42blzHf8IOXd3/ec8=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230216073840-a84f9183b338 h1:2Lr+y5cpcnEB9kyMRk9QI6i2rKPF+kctAg5ia+z+PYA=
+github.com/davidswisa/multiple-containers-in-pod v0.0.0-20230216073840-a84f9183b338/go.mod h1:IN3inVem9yiuluJS0mi3ztXcU2t2QRqTLKSTIBvrz2w=
 github.com/rs/cors v1.7.0 h1:+88SsELBHx5r+hZ8TCkggzSstaWNbDvThkVK8H6f9ik=
 github.com/rs/cors v1.7.0/go.mod h1:gFx+x8UowdsKA9AchylcLynDq+nNFfI8FkUZdN/jGCU=
