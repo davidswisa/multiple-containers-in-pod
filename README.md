@@ -85,4 +85,5 @@ http://<MACHINE-IP>:8084
 * [Kubernetes multi-container pods and container communication](https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/)  
 * [Multi-Container Pods in Kubernetes](https://linchpiner.github.io/k8s-multi-container-pods.html)
 * [Understanding multi-container pods](https://medium.com/bb-tutorials-and-thoughts/understanding-multi-container-pods-12f5780f3956)
+* [Multi-container pod how when and why](https://alexandre-vazquez.com/multi-container-pod-how-when-and-why/)
 
